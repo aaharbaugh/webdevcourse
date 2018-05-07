@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<script type="text/javascript" src="paper-full.js"></script>
+	<link rel="stylesheet" type="text/css" href="circles.css">
+	<script type="text/paperscript" canvas="myCanvas">
+
+	for(var x = 0; x < 1000; x += 100){
+	for(var i = 0; i < 1000; i += 100){
+
+	newCircle(x, i);
+
+	}
+	}
+
+	function colorRandom(){
+
+	var r = Math.floor(Math.random() * 256);
+	var g = Math.floor(Math.random() * 256);
+	var b = Math.floor(Math.random() * 256);
+	var a = Math.random() * 1;
+
+	var randColor = "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
+
+	return randColor;
+	}
+
+	function newCircle(num1, num2){
+
+	var size = randomSize();
+	var smallSize = size / 2;
+	var randomColor = colorRandom();
+
+	var myCircle = new Path.Circle(new Point(num1, num2), size);
+	myCircle.fillColor = randomColor;
+
+	var circle2 = new Path.Circle(new Point(num1, num2), smallSize);
+	circle2.fillColor = colorRandom();
+
+	}
+
+	function randomSize(){
+
+	var size = Math.floor(Math.random() * (75 - 15) + 15);
+
+	return size;
+
+	}
+</script>
+</head>
+<body>
+	<canvas id="myCanvas" resize></canvas>
+</body>
+</html>
