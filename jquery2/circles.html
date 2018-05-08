@@ -24,7 +24,7 @@
 		newCircle.fillColor = colorRandom();
 
 		circles.push(newCircle);
-
+		console.log("test");
 	}
 
 	function onFrame(event){
@@ -33,7 +33,6 @@
 			circles[i].fillColor.hue += 1;
 			circles[i].scale(.9);
 		}
-
 	}
 
 	function colorRandom(){
