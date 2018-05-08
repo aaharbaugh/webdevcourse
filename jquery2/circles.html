@@ -2,39 +2,192 @@
 <html>
 <head>
 	<title></title>
-	<script type="text/javascript" src="paper-full.js"></script>
 	<link rel="stylesheet" type="text/css" href="circles.css">
-	<script type="text/javascript" src="howler.core.js"></script>
+	<script type="text/javascript" src="lib/paper-full.js"></script>
+	<script type="text/javascript" src="lib/howler.core.js"></script>
 	<script type="text/paperscript" canvas="myCanvas">
 
-	var sound = new Howl({
-	  src: ['sounds/bubbles.mp3']
-	});
-
+//array containing paths to each sound file for each keypress.
+	var keyData = {
+		a: {
+			sound: new Howl({
+				src: ['sound/bubbles.mp3']
+		})
+	},
+		b: {
+			sound: new Howl({
+				src: ['sound/clay.mp3']
+		})
+	},
+		c: {
+			sound: new Howl({
+				src: ['sound/confetti.mp3']
+		})
+	},
+		d: {
+			sound: new Howl({
+				src: ['sound/corona.mp3']
+		})
+	},
+		e: {
+			sound: new Howl({
+				src: ['sound/dotted-spiral.mp3']
+		})
+	},
+		f: {
+			sound: new Howl({
+				src: ['sound/flash-1.mp3']
+		})
+	},
+		g: {
+			sound: new Howl({
+				src: ['sound/flash-2.mp3']
+		})
+	},
+		h: {
+			sound: new Howl({
+				src: ['sound/flash-3.mp3']
+		})
+	},
+		i: {
+			sound: new Howl({
+				src: ['sound/glimmer.mp3']
+		})
+	},
+		j: {
+			sound: new Howl({
+				src: ['sound/moon.mp3']
+		})
+	},
+		k: {
+			sound: new Howl({
+				src: ['sound/piston-1.mp3']
+		})
+	},
+		l: {
+			sound: new Howl({
+				src: ['sound/piston-2.mp3']
+		})
+	},
+		m: {
+			sound: new Howl({
+				src: ['sound/piston-3.mp3']
+		})
+	},
+		n: {
+			sound: new Howl({
+				src: ['sound/prism-1.mp3']
+		})
+	},
+		o: {
+			sound: new Howl({
+				src: ['sound/prism-2.mp3']
+		})
+	},
+		p: {
+			sound: new Howl({
+				src: ['sound/prism-3.mp3']
+		})
+	},
+		q: {
+			sound: new Howl({
+				src: ['sound/splits.mp3']
+		})
+	},
+		r: {
+			sound: new Howl({
+				src: ['sound/squiggle.mp3']
+		})
+	},
+		s: {
+			sound: new Howl({
+				src: ['sound/strike.mp3']
+		})
+	},
+		t: {
+			sound: new Howl({
+				src: ['sound/suspension.mp3']
+		})
+	},
+		u: {
+			sound: new Howl({
+				src: ['sound/timer.mp3']
+		})
+	},
+		v: {
+			sound: new Howl({
+				src: ['sound/ufo.mp3']
+		})
+	},
+		w: {
+			sound: new Howl({
+				src: ['sound/veil.mp3']
+		})
+	},
+		x: {
+			sound: new Howl({
+				src: ['sound/wipe.mp3']
+		})
+	},
+		y: {
+			sound: new Howl({
+				src: ['sound/zig-zag.mp3']
+		})
+	},
+		z: {
+			sound: new Howl({
+				src: ['sound/bubbles.mp3']
+		})
+	}
+	};
 
 	var circles = [];
 
+//function plays on each letter keypress
 	function onKeyDown(event){
-		sound.play();
-		var randomPoint = Point.random();
-		var maxPoint = new Point(view.size.width, view.size.height);
-		var point = maxPoint * randomPoint;
-		var newCircle = new Path.Circle(point, randomSize());
+		
+	//verifies whether there is data in keyData array for keypress. 
+		if(keyData[event.key]){
 
-		newCircle.fillColor = colorRandom();
+		//play sound
+			keyData[event.key]
+			keyData[event.key].sound.play();
 
-		circles.push(newCircle);
-		console.log("test");
-	}
+		//draw point at random area. 
+			var randomPoint = Point.random();
+			var maxPoint = new Point(view.size.width, view.size.height);
+			var point = maxPoint * randomPoint;
+			var newCircle = new Path.Circle(point, 400);
 
-	function onFrame(event){
-	
-		for(var i = 0; i < circles.length; i++){
-			circles[i].fillColor.hue += 1;
-			circles[i].scale(.9);
+		//change circle fill color to random color
+			newCircle.fillColor = colorRandom();
+
+		//add new circle data to circle array
+			circles.push(newCircle);
 		}
 	}
 
+//function for each frame, change color and decrease size
+	function onFrame(event){
+	
+	//runs equal to the lenght of the circles array being created
+		for(var i = 0; i < circles.length; i++){
+
+		//changes color and scale
+			circles[i].fillColor.hue += 1;
+			circles[i].scale(.9);
+
+		//remove circles if less than 1 in size
+			if(circles[i].area < 1){
+				circles[i].remove();
+				circles.splice(i, 1); //remove from circles array
+				i--; //decreases size of for loop counter 
+				console.log(circles);
+	}
+		}
+	}
+
+//function returns a random rgb value and opacity
 	function colorRandom(){
 
 		var r = Math.floor(Math.random() * 256);
@@ -45,14 +198,6 @@
 		var randColor = "rgba(" + r + ", " + g + ", " + b + ", " + a + ")";
 
 		return randColor;
-
-	}
-
-	function randomSize(){
-
-		var size = 400;
-
-		return size;
 
 	}
 </script>
