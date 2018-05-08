@@ -8,13 +8,14 @@
 	<script type="text/paperscript" canvas="myCanvas">
 
 	var sound = new Howl({
-	  src: ['sounds/bubbles.mp3']
+	  src: ['sound/bubbles.mp3']
 	});
 
 
 	var circles = [];
 
 	function onKeyDown(event){
+		Howler._autoResume();
 		sound.play();
 		var randomPoint = Point.random();
 		var maxPoint = new Point(view.size.width, view.size.height);
